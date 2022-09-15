@@ -44,11 +44,13 @@ class DebugLogGradlePlugin : KotlinCompilerPluginSupportPlugin {
   ): Provider<List<SubpluginOption>> {
     val project = kotlinCompilation.target.project
     val extension = project.extensions.getByType(DebugLogGradleExtension::class.java)
+    if (extension.enabled && extension.annotations.isEmpty()) {
+      error("DebugLog is enabled, but no annotations were set")
+    }
+    val annotationOptions = extension.annotations.map { SubpluginOption(key = "debugLogAnnotation", value = it) }
+    val enabledOption = SubpluginOption(key = "enabled", value = extension.enabled.toString())
     return project.provider {
-      listOf(
-        SubpluginOption(key = "string", value = extension.stringProperty.get()),
-        SubpluginOption(key = "file", value = extension.fileProperty.get().asFile.path),
-      )
+       annotationOptions + enabledOption
     }
   }
 }

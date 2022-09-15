@@ -17,33 +17,29 @@
 package com.zj.debuglog
 
 import com.google.auto.service.AutoService
-import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
-import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
-import org.jetbrains.kotlin.cli.common.messages.MessageCollector
+import com.zj.debuglog.DebugLogCommandLineProcessor.Companion.ARG_ANNOTATION
+import com.zj.debuglog.DebugLogCommandLineProcessor.Companion.ARG_ENABLE
+import org.jetbrains.kotlin.codegen.extensions.ClassBuilderInterceptorExtension
 import org.jetbrains.kotlin.com.intellij.mock.MockProject
 import org.jetbrains.kotlin.compiler.plugin.ComponentRegistrar
 import org.jetbrains.kotlin.config.CompilerConfiguration
 
 @AutoService(ComponentRegistrar::class)
-class DebugLogComponentRegistrar(
-  private val defaultString: String,
-  private val defaultFile: String,
-) : ComponentRegistrar {
-
-  @Suppress("unused") // Used by service loader
-  constructor() : this(
-    defaultString = "Hello, World!",
-    defaultFile = "file.txt"
-  )
+class DebugLogComponentRegistrar : ComponentRegistrar {
 
   override fun registerProjectComponents(
     project: MockProject,
     configuration: CompilerConfiguration
   ) {
-    val messageCollector = configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, MessageCollector.NONE)
-    val string = configuration.get(DebugLogCommandLineProcessor.ARG_STRING, defaultString)
-    val file = configuration.get(DebugLogCommandLineProcessor.ARG_FILE, defaultFile)
-
-    IrGenerationExtension.registerExtension(project, DebugLogGenerationExtension(messageCollector, string, file))
+    if (!configuration.getBoolean(ARG_ENABLE)) {
+      return
+    }
+    ClassBuilderInterceptorExtension.registerExtension(
+      project,
+      DebugLogClassGenerationInterceptor(
+        debugLogAnnotations = configuration[ARG_ANNOTATION]
+          ?: error("debuglog plugin requires at least one annotation class option passed to it")
+      )
+    )
   }
 }

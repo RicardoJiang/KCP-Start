@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kotlinirplugintemplate">
         <activity
-            android:name=".MainActivity"
+            android:name="com.zj.kcp_start.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

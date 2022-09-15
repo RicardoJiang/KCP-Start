@@ -27,28 +27,25 @@ import org.jetbrains.kotlin.config.CompilerConfigurationKey
 @AutoService(CommandLineProcessor::class)
 class DebugLogCommandLineProcessor : CommandLineProcessor {
   companion object {
-    private const val OPTION_STRING = "string"
-    private const val OPTION_FILE = "file"
+    private const val OPTION_ENABLE = "enabled"
+    private const val OPTION_ANNOTATION = "debugLogAnnotation"
 
-    val ARG_STRING = CompilerConfigurationKey<String>(OPTION_STRING)
-    val ARG_FILE = CompilerConfigurationKey<String>(OPTION_FILE)
+    val ARG_ENABLE = CompilerConfigurationKey<Boolean>(OPTION_ENABLE)
+    val ARG_ANNOTATION = CompilerConfigurationKey<List<String>>(OPTION_ANNOTATION)
   }
 
   override val pluginId: String = BuildConfig.KOTLIN_PLUGIN_ID
 
   override val pluginOptions: Collection<CliOption> = listOf(
     CliOption(
-      optionName = OPTION_STRING,
-      valueDescription = "string",
-      description = "sample string argument",
-      required = false,
+      optionName = OPTION_ENABLE, valueDescription = "<true|false>",
+      description = "whether to enable the debuglog plugin or not"
     ),
     CliOption(
-      optionName = OPTION_FILE,
-      valueDescription = "file",
-      description = "sample file argument",
-      required = false,
-    ),
+      optionName = OPTION_ANNOTATION, valueDescription = "<fqname>",
+      description = "fully qualified name of the annotation(s) to use as debug-log",
+      required = true, allowMultipleOccurrences = true
+    )
   )
 
   override fun processOption(
@@ -57,8 +54,8 @@ class DebugLogCommandLineProcessor : CommandLineProcessor {
     configuration: CompilerConfiguration
   ) {
     return when (option.optionName) {
-      OPTION_STRING -> configuration.put(ARG_STRING, value)
-      OPTION_FILE -> configuration.put(ARG_FILE, value)
+      OPTION_ENABLE -> configuration.put(ARG_ENABLE, value.toBoolean())
+      OPTION_ANNOTATION -> configuration.appendList(ARG_ANNOTATION, value)
       else -> throw IllegalArgumentException("Unexpected config option ${option.optionName}")
     }
   }

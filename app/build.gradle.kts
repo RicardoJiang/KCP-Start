@@ -5,15 +5,15 @@ plugins {
 }
 
 debugLog {
-   stringProperty.set("abc")
-   fileProperty.set(project.buildFile)
+    enabled = true
+    annotations = listOf("com.zj.kcp_start.DebugLog")
 }
 
 android {
     compileSdk = 32
 
     defaultConfig {
-        applicationId = "com.zj.app"
+        applicationId = "com.zj.kcp_start"
         minSdk = 21
         targetSdk = 32
         versionCode = 1

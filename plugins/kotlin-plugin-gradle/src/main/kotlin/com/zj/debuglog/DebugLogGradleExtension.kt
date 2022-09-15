@@ -16,11 +16,10 @@
 
 package com.zj.debuglog
 
-import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
-import org.gradle.api.provider.Property
+open class DebugLogGradleExtension {
+  /** If [false], this plugin won't actually be applied */
+  var enabled: Boolean = true
 
-open class DebugLogGradleExtension(objects: ObjectFactory) {
-  val stringProperty: Property<String> = objects.property(String::class.java)
-  val fileProperty: RegularFileProperty = objects.fileProperty()
+  /** FQ names of annotations that should count as debuglog annotations */
+  var annotations: List<String> = emptyList()
 }
