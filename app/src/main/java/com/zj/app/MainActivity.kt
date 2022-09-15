@@ -1,8 +1,7 @@
-package com.zj.kcp_start
+package com.zj.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.zj.app.R
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
