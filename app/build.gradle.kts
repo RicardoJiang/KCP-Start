@@ -1,10 +1,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.bnorm.template.kotlin-ir-plugin")
+    id("com.zj.debuglog.kotlin-plugin")
 }
 
-template {
+debugLog {
    stringProperty.set("abc")
    fileProperty.set(project.buildFile)
 }

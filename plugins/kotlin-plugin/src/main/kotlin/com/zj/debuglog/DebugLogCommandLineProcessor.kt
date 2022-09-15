@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.bnorm.template
+package com.zj.debuglog
 
+import com.bnorm.template.BuildConfig
 import com.google.auto.service.AutoService
 import org.jetbrains.kotlin.compiler.plugin.AbstractCliOption
 import org.jetbrains.kotlin.compiler.plugin.CliOption
@@ -24,7 +25,7 @@ import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.CompilerConfigurationKey
 
 @AutoService(CommandLineProcessor::class)
-class TemplateCommandLineProcessor : CommandLineProcessor {
+class DebugLogCommandLineProcessor : CommandLineProcessor {
   companion object {
     private const val OPTION_STRING = "string"
     private const val OPTION_FILE = "file"

@@ -1,4 +1,4 @@
 
 
-include(":kotlin-ir-plugin-gradle")
-include(":kotlin-ir-plugin")
+include(":kotlin-plugin-gradle")
+include(":kotlin-plugin")
