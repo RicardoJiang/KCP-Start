@@ -53,5 +53,7 @@ fun doSomething() {
         assertEquals(KotlinCompilation.ExitCode.OK, result.exitCode)
         val out = invokeMain(result, "MainKt").trim().split("""\r?\n+""".toRegex())
         assert(out.size == 2)
+        assert(out[0] == "doSomething 方法开始执行")
+        assert(out[1] == "doSomething 方法执行结束")
     }
 }
