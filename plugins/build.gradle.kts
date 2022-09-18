@@ -10,7 +10,7 @@ plugins {
 }
 
 allprojects {
-  group = "com.bnorm.template"
+  group = "com.zj.debuglog"
   version = "0.1.0-SNAPSHOT"
 }
 
