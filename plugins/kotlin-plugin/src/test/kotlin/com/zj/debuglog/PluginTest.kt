@@ -16,7 +16,6 @@
 
 package com.zj.debuglog
 
-import com.bnorm.template.BuildConfig
 import com.tschuchort.compiletesting.KotlinCompilation
 import com.tschuchort.compiletesting.PluginOption
 import com.tschuchort.compiletesting.SourceFile
